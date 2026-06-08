@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Humanoid AI – Autonomy Department Pre-Qualification</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f4f4f6;
+      color: #1a1a2e;
+      min-height: 100vh;
+      padding: 40px 16px 80px;
+    }
+
+    .wrapper {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      background: #0d0d1a;
+      border-radius: 12px 12px 0 0;
+      padding: 36px 40px 32px;
+      color: #fff;
+    }
+
+    .header .logo {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #6ee7f7;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      font-size: 14px;
+      color: #a0a8c0;
+      line-height: 1.7;
+    }
+
+    .header .note {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: rgba(110, 231, 247, 0.08);
+      border-left: 3px solid #6ee7f7;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: #c8d0e8;
+      line-height: 1.6;
+    }
+
+    /* Form body */
+    .form-body {
+      background: #fff;
+      padding: 0 40px;
+    }
+
+    /* Section dividers */
+    .section-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #6ee7f7;
+      background: #0d0d1a;
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin: 40px 0 0;
+    }
+
+    /* Question blocks */
+    .q-block {
+      padding: 24px 0 0;
+      border-bottom: 1px solid #f0f0f5;
+    }
+    .q-block:last-of-type { border-bottom: none; }
+
+    .q-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: #9090b0;
+      letter-spacing: 0.08em;
+      margin-bottom: 6px;
+    }
+
+    .q-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a2e;
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+
+    .q-sub {
+      font-size: 13px;
+      color: #6b6b8a;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    /* Radio / checkbox groups */
+    .radio-group, .check-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .radio-group label, .check-group label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      color: #2a2a45;
+      cursor: pointer;
+      padding: 10px 14px;
+      border: 1.5px solid #e4e4f0;
+      border-radius: 8px;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .radio-group label:hover, .check-group label:hover {
+      border-color: #6ee7f7;
+      background: #f7fdff;
+    }
+
+    .radio-group input[type="radio"]:checked + span,
+    .check-group input[type="checkbox"]:checked + span {
+      color: #0d0d1a;
+      font-weight: 600;
+    }
+
+    .radio-group label:has(input:checked),
+    .check-group label:has(input:checked) {
+      border-color: #6ee7f7;
+      background: #f0fbfd;
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+      accent-color: #00b8d4;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Text inputs */
+    input[type="text"], input[type="email"], input[type="number"], textarea, select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid #e4e4f0;
+      border-radius: 8px;
+      font-size: 14px;
+      color: #1a1a2e;
+      background: #fafafa;
+      outline: none;
+      transition: border-color 0.15s;
+      margin-bottom: 20px;
+      font-family: inherit;
+    }
+
+    input[type="text"]:focus, input[type="email"]:focus,
+    input[type="number"]:focus, textarea:focus, select:focus {
+      border-color: #6ee7f7;
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+
+    /* Range slider */
+    .slider-wrap { margin-bottom: 20px; }
+    .slider-wrap input[type="range"] {
+      width: 100%;
+      accent-color: #00b8d4;
+      margin: 8px 0 4px;
+      padding: 0;
+      border: none;
+      background: none;
+    }
+    .slider-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #9090b0;
+    }
+    .slider-val {
+      font-size: 14px;
+      font-weight: 700;
+      color: #00b8d4;
+    }
+
+    /* Conditional sub-section */
+    .conditional {
+      display: none;
+      background: #f8f8fc;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .conditional.show { display: block; }
+    .conditional .q-label { font-size: 14px; }
+
+    /* Skill pills for tech stack */
+    .pill-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .pill-group label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 14px;
+      border: 1.5px solid #e4e4f0;
+      border-radius: 100px;
+      font-size: 13px;
+      color: #2a2a45;
+      cursor: pointer;
+      transition: border-color 0.15s, background 0.15s;
+    }
+    .pill-group label:hover { border-color: #6ee7f7; background: #f7fdff; }
+    .pill-group label:has(input:checked) {
+      border-color: #00b8d4;
+      background: #e8f9fd;
+      color: #005f6b;
+      font-weight: 600;
+    }
+
+    /* Footer / submit */
+    .form-footer {
+      background: #0d0d1a;
+      border-radius: 0 0 12px 12px;
+      padding: 32px 40px;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, #00b8d4, #0077a8);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      letter-spacing: 0.03em;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .submit-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+    .submit-btn:active { transform: translateY(0); }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: #6070a0;
+      margin-top: 16px;
+      line-height: 1.6;
+    }
+
+    /* Success screen */
+    #success {
+      display: none;
+      background: #fff;
+      border-radius: 0 0 12px 12px;
+      padding: 60px 40px;
+      text-align: center;
+    }
+    #success .tick {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    #success h2 { font-size: 20px; color: #1a1a2e; margin-bottom: 10px; }
+    #success p { font-size: 14px; color: #6b6b8a; line-height: 1.7; }
+
+    /* Required asterisk */
+    .req { color: #ff4d6d; margin-left: 3px; }
+
+    @media (max-width: 520px) {
+      .header, .form-body, .form-footer { padding-left: 20px; padding-right: 20px; }
+    }
+  </style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header" style="padding-top:0; overflow:hidden;">
+    <img src="https://thehumanoid.ai/wp-content/uploads/2024/12/humonoid-social.jpg"
+         alt="Humanoid"
+         style="width:100%; display:block; border-radius:12px 12px 0 0; margin-bottom:28px; object-fit:cover; max-height:200px;" />
+    <div class="logo">Humanoid &nbsp;·&nbsp; thehumanoid.ai</div>
+    <h1>Autonomy Department &ndash; Pre-Qualification</h1>
+    <p>Thank you for your interest and for sharing your CV. Before we arrange a call, please take a few minutes to complete the questions below. Your answers allow us to move quickly and ensure this opportunity is the right fit for both sides.</p>
+    <div class="note">A few minutes invested here can save hours later &mdash; we appreciate your time and will follow up promptly.</div>
+  </div>
+
+  <!-- FORM -->
+  <form class="form-body" id="prequalForm" action="https://formspree.io/f/xrevqlzz" method="POST" novalidate>
+    <!-- Formspree config -->
+    <input type="hidden" name="_replyto" value="ashley.cover@thehumanoid.ai" />
+    <input type="hidden" name="_subject" value="New Autonomy Pre-Qualification Response" />
+    <input type="hidden" name="_next" value="about:blank" />
+
+    <!-- FULL NAME -->
+    <div class="q-block" style="padding-bottom:24px;">
+      <div class="q-label">Full Name<span class="req">*</span></div>
+      <div class="q-sub">Used as a unique identifier throughout the screening process.</div>
+      <input type="text" name="full_name" placeholder="e.g. Siwei Guo" required />
+    </div>
+
+    <!-- SECTION 1: ELIGIBILITY -->
+    <div class="section-label">Eligibility</div>
+
+    <!-- Q1: Work Auth -->
+    <div class="q-block">
+      <div class="q-number">Question 1 of 9</div>
+      <div class="q-label">Do you have the right to work in the UK without requiring visa sponsorship?<span class="req">*</span></div>
+      <div class="q-sub">This role is based in London. We are unable to offer sponsorship at this time.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="work_auth" value="yes" required /><span>Yes, I have the right to work in the UK without sponsorship</span></label>
+        <label><input type="radio" name="work_auth" value="no" /><span>No, I would require sponsorship</span></label>
+        <label><input type="radio" name="work_auth" value="unsure" /><span>I am not sure and would need to confirm</span></label>
+      </div>
+    </div>
+
+    <!-- Q2: Location / Relocation -->
+    <div class="q-block">
+      <div class="q-number">Question 2 of 9</div>
+      <div class="q-label">Are you currently based in London, UK?<span class="req">*</span></div>
+      <div class="radio-group">
+        <label><input type="radio" name="based_london" value="yes" onchange="toggleConditional('relocation-box', false)" /><span>Yes, I am based in London</span></label>
+        <label><input type="radio" name="based_london" value="no" onchange="toggleConditional('relocation-box', true)" /><span>No, I am based elsewhere</span></label>
+      </div>
+      <div class="conditional" id="relocation-box">
+        <div class="q-label">Where are you currently based, and are you open to relocating to London?</div>
+        <input type="text" name="current_location" placeholder="e.g. Paris, France" />
+        <div class="q-label" style="margin-top:4px;">If open to relocating, how soon could you be available onsite in London?</div>
+        <div class="radio-group">
+          <label><input type="radio" name="relocation_timeline" value="immediately" /><span>Immediately (within 4 weeks)</span></label>
+          <label><input type="radio" name="relocation_timeline" value="1-3months" /><span>Within 1&ndash;3 months</span></label>
+          <label><input type="radio" name="relocation_timeline" value="3-6months" /><span>Within 3&ndash;6 months</span></label>
+          <label><input type="radio" name="relocation_timeline" value="not_open" /><span>I am not open to relocating</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2: TECHNICAL -->
+    <div class="section-label">Technical Skills</div>
+
+    <!-- Q3: Coding Proficiency -->
+    <div class="q-block">
+      <div class="q-number">Question 3 of 9</div>
+      <div class="q-label">How would you rate your hands-on coding proficiency today?<span class="req">*</span></div>
+      <div class="q-sub">Our Autonomy roles require strong, active coding ability. Please be candid &mdash; this helps us place you correctly.</div>
+      <div class="slider-wrap">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <span style="font-size:13px; color:#6b6b8a;">Self-rating</span>
+          <span class="slider-val" id="sliderVal">3 / 5</span>
+        </div>
+        <input type="range" name="coding_rating" min="1" max="5" value="3"
+          oninput="document.getElementById('sliderVal').textContent = this.value + ' / 5'" />
+        <div class="slider-labels">
+          <span>1 &mdash; Mostly non-coding</span>
+          <span>5 &mdash; Expert, daily coder</span>
+        </div>
+      </div>
+      <div class="q-label" style="margin-bottom:10px;">Which of the following are you actively working with? <span style="font-weight:400; color:#9090b0;">(Select all that apply)</span></div>
+      <div class="pill-group">
+        <label><input type="checkbox" name="tech_stack" value="cpp" /><span>C++</span></label>
+        <label><input type="checkbox" name="tech_stack" value="python" /><span>Python</span></label>
+        <label><input type="checkbox" name="tech_stack" value="ros" /><span>ROS / ROS2</span></label>
+        <label><input type="checkbox" name="tech_stack" value="pytorch" /><span>PyTorch / JAX</span></label>
+        <label><input type="checkbox" name="tech_stack" value="eigen" /><span>Eigen</span></label>
+        <label><input type="checkbox" name="tech_stack" value="gtsam" /><span>GTSAM / Ceres</span></label>
+        <label><input type="checkbox" name="tech_stack" value="opencv" /><span>OpenCV</span></label>
+        <label><input type="checkbox" name="tech_stack" value="pcl" /><span>PCL</span></label>
+        <label><input type="checkbox" name="tech_stack" value="cuda" /><span>CUDA</span></label>
+        <label><input type="checkbox" name="tech_stack" value="other" /><span>Other</span></label>
+      </div>
+      <textarea name="tech_other" placeholder="Any additional tools, frameworks or languages worth mentioning..."></textarea>
+    </div>
+
+    <!-- Q4: Autonomy Expertise -->
+    <div class="q-block">
+      <div class="q-number">Question 4 of 9</div>
+      <div class="q-label">Where does your core Autonomy expertise lie?<span class="req">*</span></div>
+      <div class="q-sub">Select all that apply. We use this to match you to the right sub-team.</div>
+      <div class="check-group">
+        <label><input type="checkbox" name="autonomy_domain" value="slam" /><span>SLAM and State Estimation</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="sensor_fusion" /><span>Sensor Fusion (LiDAR, IMU, Camera)</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="motion_planning" /><span>Motion Planning and Control</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="perception" /><span>Perception and 3D Scene Understanding</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="ml_nav" /><span>ML-based Navigation (NeRF, Gaussian Splatting, Foundation Models)</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="legged" /><span>Legged or Humanoid Robot Systems</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="avs" /><span>Autonomous Vehicles</span></label>
+        <label><input type="checkbox" name="autonomy_domain" value="drones" /><span>Drones and UAVs</span></label>
+      </div>
+    </div>
+
+    <!-- SECTION 3: EXPERIENCE -->
+    <div class="section-label">Experience</div>
+
+    <!-- Q5: Production Track Record -->
+    <div class="q-block">
+      <div class="q-number">Question 5 of 9</div>
+      <div class="q-label">Have you taken autonomy algorithms from research into production on real hardware?<span class="req">*</span></div>
+      <div class="q-sub">e.g. self-driving, drone navigation, warehouse robotics, mobile manipulation.</div>
+      <div class="radio-group">
+        <label><input type="radio" name="production" value="yes" onchange="toggleConditional('production-box', true)" /><span>Yes</span></label>
+        <label><input type="radio" name="production" value="partial" onchange="toggleConditional('production-box', true)" /><span>Partially &mdash; I have contributed to production systems</span></label>
+        <label><input type="radio" name="production" value="no" onchange="toggleConditional('production-box', false)" /><span>No, my work has been primarily research or simulation</span></label>
+      </div>
+      <div class="conditional" id="production-box">
+        <div class="q-label">Please briefly describe the system, your specific role, and the scale of deployment.</div>
+        <textarea name="production_detail" placeholder="e.g. Led integration of LiDAR-inertial SLAM onto a fleet of 200 AMRs operating in unstructured warehouse environments..."></textarea>
+      </div>
+    </div>
+
+    <!-- Q6: Startup / Industry Experience -->
+    <div class="q-block">
+      <div class="q-number">Question 6 of 9</div>
+      <div class="q-label">How would you describe your industry and company-stage experience?<span class="req">*</span></div>
+      <div class="q-sub">Select all that apply.</div>
+      <div class="check-group">
+        <label><input type="checkbox" name="industry_exp" value="startup_early" /><span>Early-stage startup (Series A or earlier)</span></label>
+        <label><input type="checkbox" name="industry_exp" value="startup_scale" /><span>Scaling startup (Series B+)</span></label>
+        <label><input type="checkbox" name="industry_exp" value="enterprise" /><span>Large enterprise or corporate R&amp;D</span></label>
+        <label><input type="checkbox" name="industry_exp" value="academia" /><span>Academic research lab</span></label>
+        <label><input type="checkbox" name="industry_exp" value="consulting" /><span>Consulting or contract engineering</span></label>
+      </div>
+      <div class="q-label" style="margin-bottom:10px; margin-top:4px;">How comfortable are you in a fast-paced environment with shifting priorities and limited process overhead?</div>
+      <div class="radio-group">
+        <label><input type="radio" name="startup_comfort" value="very" /><span>Very comfortable &mdash; this is where I thrive</span></label>
+        <label><input type="radio" name="startup_comfort" value="comfortable" /><span>Comfortable &mdash; I have done it before</span></label>
+        <label><input type="radio" name="startup_comfort" value="some" /><span>Some experience but prefer more structure</span></label>
+        <label><input type="radio" name="startup_comfort" value="prefer_structured" /><span>I generally prefer a structured environment</span></label>
+      </div>
+    </div>
+
+    <!-- SECTION 4: LOGISTICS -->
+    <div class="section-label">Logistics</div>
+
+    <!-- Q7: Onsite -->
+    <div class="q-block">
+      <div class="q-number">Question 7 of 9</div>
+      <div class="q-label">This role is fully onsite at our London R&amp;D hub. Are you comfortable with a full-time onsite setup?<span class="req">*</span></div>
+      <div class="radio-group">
+        <label><input type="radio" name="onsite" value="yes" /><span>Yes, fully comfortable with full-time onsite</span></label>
+        <label><input type="radio" name="onsite" value="mostly" /><span>Mostly, though I would appreciate occasional flexibility</span></label>
+        <label><input type="radio" name="onsite" value="prefer_hybrid" /><span>I would prefer a hybrid arrangement</span></label>
+        <label><input type="radio" name="onsite" value="no" /><span>No, I need a remote or hybrid role</span></label>
+      </div>
+    </div>
+
+    <!-- Q8: Compensation -->
+    <div class="q-block">
+      <div class="q-number">Question 8 of 9</div>
+      <div class="q-label">What are your gross salary expectations (GBP per annum)?<span class="req">*</span></div>
+      <div class="q-sub">Sharing a range helps us confirm alignment early and avoids wasted time on both sides. All responses are treated in strict confidence.</div>
+      <input type="text" name="salary_expectation" placeholder="e.g. £90,000 – £110,000" />
+      <div class="q-label">What was your most recent gross base salary (GBP per annum)?</div>
+      <input type="text" name="salary_previous" placeholder="e.g. £85,000" />
+    </div>
+
+    <!-- Q9: Availability -->
+    <div class="q-block" style="padding-bottom:32px;">
+      <div class="q-number">Question 9 of 9</div>
+      <div class="q-label">What is your current employment status and availability?<span class="req">*</span></div>
+      <div class="radio-group">
+        <label><input type="radio" name="employment_status" value="employed" onchange="toggleConditional('notice-box', true)" /><span>Currently employed</span></label>
+        <label><input type="radio" name="employment_status" value="notice" onchange="toggleConditional('notice-box', true)" /><span>Currently employed but working my notice</span></label>
+        <label><input type="radio" name="employment_status" value="available" onchange="toggleConditional('notice-box', false)" /><span>Not currently employed and available immediately</span></label>
+      </div>
+      <div class="conditional" id="notice-box">
+        <div class="q-label">What is your notice period?</div>
+        <div class="radio-group">
+          <label><input type="radio" name="notice_period" value="1month" /><span>1 month or less</span></label>
+          <label><input type="radio" name="notice_period" value="2months" /><span>2 months</span></label>
+          <label><input type="radio" name="notice_period" value="3months" /><span>3 months</span></label>
+          <label><input type="radio" name="notice_period" value="3plus" /><span>More than 3 months</span></label>
+        </div>
+        <div class="q-label" style="margin-top:4px;">Is there any flexibility to shorten your notice period if required?</div>
+        <div class="radio-group">
+          <label><input type="radio" name="notice_flex" value="yes" /><span>Yes, with negotiation</span></label>
+          <label><input type="radio" name="notice_flex" value="no" /><span>No, contractually fixed</span></label>
+          <label><input type="radio" name="notice_flex" value="unsure" /><span>Unsure</span></label>
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+  <!-- FOOTER / SUBMIT -->
+  <div class="form-footer">
+    <button class="submit-btn" id="submitBtn" onclick="handleSubmit(event)" data-fs-submit-btn>Submit Pre-Qualification &#8594;</button>
+    <div id="fs-error-msg" style="display:none; margin-top:14px; padding:12px 16px; background:rgba(255,77,109,0.12); border-left:3px solid #ff4d6d; border-radius:0 6px 6px 0; color:#ffb3c1; font-size:13px; line-height:1.6;"></div>
+    <div class="footer-note">Your responses are treated in strict confidence and used solely for recruitment purposes.<br>Ashley Cover &nbsp;&bull;&nbsp; Lead Technical Recruiter &nbsp;&bull;&nbsp; Humanoid</div>
+  </div>
+
+  <!-- SUCCESS -->
+  <div id="success" style="background:#fff; border-radius: 0 0 12px 12px; display:none; padding:60px 40px; text-align:center;">
+    <div style="font-size:52px; margin-bottom:20px;">✅</div>
+    <h2 style="font-size:22px; color:#1a1a2e; margin-bottom:12px;">Thank you, we have received your responses!</h2>
+    <p style="font-size:14px; color:#6b6b8a; line-height:1.8;">Ashley will review your answers and be in touch shortly.<br>We aim to respond within 2 business days.</p>
+    <p style="margin-top:24px; font-size:13px; color:#9090b0;">Humanoid &nbsp;&bull;&nbsp; <a href="https://thehumanoid.ai" style="color:#00b8d4; text-decoration:none;">thehumanoid.ai</a></p>
+  </div>
+
+</div>
+
+<script>
+  function toggleConditional(id, show) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('show', show);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('prequalForm');
+    const btn = document.getElementById('submitBtn');
+    const errorBox = document.getElementById('fs-error-msg');
+    const required = form.querySelectorAll('[required]');
+    let valid = true;
+
+    required.forEach(el => {
+      if (el.type === 'radio') {
+        const group = form.querySelectorAll(`[name="${el.name}"]`);
+        const checked = Array.from(group).some(r => r.checked);
+        if (!checked) valid = false;
+      } else if (!el.value.trim()) {
+        valid = false;
+      }
+    });
+
+    if (!valid) {
+      alert('Please answer all required questions before submitting.');
+      return;
+    }
+
+    // Disable button and show loading state
+    btn.disabled = true;
+    btn.textContent = 'Submitting...';
+    errorBox.style.display = 'none';
+
+    // Submit to Formspree via Vanilla JS Ajax
+    const data = new FormData(form);
+    fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: { 'Accept': 'application/json' }
+    })
+    .then(res => res.json().then(body => ({ ok: res.ok, body })))
+    .then(({ ok, body }) => {
+      if (ok) {
+        form.style.display = 'none';
+        document.querySelector('.form-footer').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+      } else {
+        // Surface Formspree server-side error messages if available
+        const msg = (body.errors && body.errors.map(err => err.message).join(', '))
+          || body.error
+          || 'Something went wrong. Please try again or email ashley.cover@thehumanoid.ai directly.';
+        errorBox.textContent = msg;
+        errorBox.style.display = 'block';
+        btn.disabled = false;
+        btn.textContent = 'Submit Pre-Qualification →';
+      }
+    })
+    .catch(() => {
+      errorBox.textContent = 'Network error. Please check your connection and try again.';
+      errorBox.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Submit Pre-Qualification →';
+    });
+  }
+</script>
+</body>
+</html>
